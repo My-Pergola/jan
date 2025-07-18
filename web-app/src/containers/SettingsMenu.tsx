@@ -93,6 +93,10 @@ const SettingsMenu = () => {
       route: route.settings.local_api_server,
     },
     {
+      title: 'common:webhook-server',
+      route: route.settings.webhook_server,
+    },
+    {
       title: 'common:https_proxy',
       route: route.settings.https_proxy,
     },

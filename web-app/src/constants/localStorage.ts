@@ -8,6 +8,7 @@ export const localStorageKey = {
   settingGeneral: 'setting-general',
   settingCodeBlock: 'setting-code-block',
   settingLocalApiServer: 'setting-local-api-server',
+  settingWebhookServer: 'setting-webhook-server',
   settingProxyConfig: 'setting-proxy-config',
   settingHardware: 'setting-hardware',
   settingVulkan: 'setting-vulkan',

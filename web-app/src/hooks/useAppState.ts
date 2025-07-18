@@ -9,11 +9,13 @@ type AppState = {
   loadingModel?: boolean
   tools: MCPTool[]
   serverStatus: 'running' | 'stopped' | 'pending'
+  webhookServerStatus: 'running' | 'stopped' | 'pending'
   abortControllers: Record<string, AbortController>
   tokenSpeed?: TokenSpeed
   currentToolCall?: ChatCompletionMessageToolCall
   showOutOfContextDialog?: boolean
   setServerStatus: (value: 'running' | 'stopped' | 'pending') => void
+  setWebhookServerStatus: (value: 'running' | 'stopped' | 'pending') => void
   updateStreamingContent: (content: ThreadMessage | undefined) => void
   updateCurrentToolCall: (
     toolCall: ChatCompletionMessageToolCall | undefined
@@ -31,6 +33,7 @@ export const useAppState = create<AppState>()((set) => ({
   loadingModel: false,
   tools: [],
   serverStatus: 'stopped',
+  webhookServerStatus: 'stopped',
   abortControllers: {},
   tokenSpeed: undefined,
   currentToolCall: undefined,
@@ -60,6 +63,7 @@ export const useAppState = create<AppState>()((set) => ({
     set({ tools })
   },
   setServerStatus: (value) => set({ serverStatus: value }),
+  setWebhookServerStatus: (value) => set({ webhookServerStatus: value }),
   setAbortController: (threadId, controller) => {
     set((state) => ({
       abortControllers: {

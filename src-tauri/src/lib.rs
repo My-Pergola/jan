@@ -5,7 +5,7 @@ use core::{
     state::{generate_app_token, AppState},
     utils::download::DownloadManagerState,
 };
-use std::{collections::HashMap, sync::Arc};
+use std::{collections::{HashMap, VecDeque}, sync::Arc};
 
 use tauri::Emitter;
 use tokio::sync::Mutex;
@@ -87,6 +87,9 @@ pub fn run() {
             // hardware
             core::hardware::get_system_info,
             core::hardware::get_system_usage,
+            core::webhook::start_webhook_server,
+            core::webhook::stop_webhook_server,
+            core::webhook::get_next_lead,
         ])
         .manage(AppState {
             app_token: Some(generate_app_token()),
@@ -98,6 +101,8 @@ pub fn run() {
             mcp_active_servers: Arc::new(Mutex::new(HashMap::new())),
             mcp_successfully_connected: Arc::new(Mutex::new(HashMap::new())),
             server_handle: Arc::new(Mutex::new(None)),
+            webhook_handle: Arc::new(Mutex::new(None)),
+            webhook_queue: Arc::new(Mutex::new(VecDeque::new())),
         })
         .setup(|app| {
             app.handle().plugin(

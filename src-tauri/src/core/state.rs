@@ -1,4 +1,4 @@
-use std::{collections::HashMap, sync::Arc};
+use std::{collections::{HashMap, VecDeque}, sync::Arc};
 
 use crate::core::utils::download::DownloadManagerState;
 use rand::{distributions::Alphanumeric, Rng};
@@ -20,6 +20,8 @@ pub struct AppState {
     pub mcp_active_servers: Arc<Mutex<HashMap<String, serde_json::Value>>>,
     pub mcp_successfully_connected: Arc<Mutex<HashMap<String, bool>>>,
     pub server_handle: Arc<Mutex<Option<ServerHandle>>>,
+    pub webhook_handle: Arc<Mutex<Option<ServerHandle>>>,
+    pub webhook_queue: Arc<Mutex<VecDeque<serde_json::Value>>>,
 }
 pub fn generate_app_token() -> String {
     rand::thread_rng()
