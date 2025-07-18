@@ -531,6 +531,15 @@ async fn schedule_mcp_start_task<R: Runtime>(
         cmd.arg("run");
         cmd.env("UV_CACHE_DIR", cache_dir.to_str().unwrap().to_string());
     }
+
+    if command == "bunx" {
+        let mut cache_dir = app_path.clone();
+        cache_dir.push(".bunx");
+        let bun_path = format!("{}/bun", bin_path.display());
+        cmd = Command::new(bun_path);
+        cmd.arg("x");
+        cmd.env("BUN_INSTALL", cache_dir.to_str().unwrap().to_string());
+    }
     
     #[cfg(windows)]
     {
