@@ -9,6 +9,7 @@ import { AppearanceProvider } from '@/providers/AppearanceProvider'
 import { ThemeProvider } from '@/providers/ThemeProvider'
 import { KeyboardShortcutsProvider } from '@/providers/KeyboardShortcuts'
 import { DataProvider } from '@/providers/DataProvider'
+import { WebhookQueueProvider } from '@/providers/WebhookQueueProvider'
 import { route } from '@/constants/routes'
 import { ExtensionProvider } from '@/providers/ExtensionProvider'
 import { ToasterProvider } from '@/providers/ToasterProvider'
@@ -159,6 +160,7 @@ function RootLayout() {
       <TranslationProvider>
         <ExtensionProvider>
           <DataProvider />
+          <WebhookQueueProvider />
         </ExtensionProvider>
         {isLocalAPIServerLogsRoute ? <LogsLayout /> : <AppLayout />}
         {/* <TanStackRouterDevtools position="bottom-right" /> */}
