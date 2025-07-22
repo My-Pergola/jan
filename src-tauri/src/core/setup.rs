@@ -241,7 +241,7 @@ pub fn setup_mcp(app: &App) {
 
     // Add a listener to handle app quit gracefully
     let app_handle_for_quit = app.handle().clone();
-    app.listen_global("tauri://close-requested", move |_event| {
+    app.listen_any("tauri://close-requested", move |_event| {
         let state: tauri::State<AppState> = app_handle_for_quit.state();
         log::info!("App close requested, handling MCP cleanup.");
         // We block on this to ensure cleanup happens before the app fully exits.
