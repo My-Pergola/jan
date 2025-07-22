@@ -96,8 +96,8 @@ jobs:
         run: |
           mkdir -p ./src-tauri/resources/bin/
           cd ./src-tauri/resources/bin/
-          curl -L -o bun-darwin-x64.zip https://github.com/oven-sh/bun/releases/download/bun-v1.2.10/bun-darwin-x64.zip
-          curl -L -o bun-darwin-aarch64.zip https://github.com/oven-sh/bun/releases/download/bun-v1.2.10/bun-darwin-aarch64.zip
+          curl -L -o bun-darwin-x64.zip https://github.com/oven-sh/bun/releases/download/bun-v1.2.18/bun-darwin-x64.zip
+          curl -L -o bun-darwin-aarch64.zip https://github.com/oven-sh/bun/releases/download/bun-v1.2.18/bun-darwin-aarch64.zip
           unzip bun-darwin-x64.zip
           unzip bun-darwin-aarch64.zip
           lipo -create -output bun-universal-apple-darwin bun-darwin-x64/bun bun-darwin-aarch64/bun
@@ -168,6 +168,7 @@ jobs:
       - name: Build app
         run: |
           rustup target add x86_64-apple-darwin
+          rustup target add aarch64-apple-darwin
           make build-tauri
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -5,10 +5,10 @@ use std::sync::Arc;
 
 use hyper::{service::{make_service_fn, service_fn}, Body, Method, Request, Response, Server};
 use serde_json::Value;
-use tauri::{AppHandle, State};
-use tokio::{sync::Mutex, task::JoinHandle};
+use tauri::State;
+use tokio::sync::Mutex;
 
-use crate::core::state::{AppState, ServerHandle};
+use crate::core::state::AppState;
 
 async fn handle_request(
     req: Request<Body>,
@@ -80,8 +80,7 @@ pub async fn stop_webhook_server(state: State<'_, AppState>) -> Result<(), Strin
 }
 
 #[tauri::command]
-pub async fn get_next_lead(state: State<'_, AppState>) -> Option<String> {
+pub async fn get_next_lead(state: State<'_, AppState>) -> Result<Option<String>, String> {
     let mut q = state.webhook_queue.lock().await;
-    q.pop_front().map(|v| v.to_string())
+    Ok(q.pop_front().map(|v| v.to_string()))
 }
-

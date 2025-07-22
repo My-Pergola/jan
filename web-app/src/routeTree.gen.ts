@@ -17,6 +17,7 @@ import { Route as HubImport } from './routes/hub'
 import { Route as AssistantImport } from './routes/assistant'
 import { Route as IndexImport } from './routes/index'
 import { Route as ThreadsThreadIdImport } from './routes/threads/$threadId'
+import { Route as SettingsWebhookServerImport } from './routes/settings/webhook-server'
 import { Route as SettingsShortcutsImport } from './routes/settings/shortcuts'
 import { Route as SettingsPrivacyImport } from './routes/settings/privacy'
 import { Route as SettingsMcpServersImport } from './routes/settings/mcp-servers'
@@ -65,6 +66,12 @@ const IndexRoute = IndexImport.update({
 const ThreadsThreadIdRoute = ThreadsThreadIdImport.update({
   id: '/threads/$threadId',
   path: '/threads/$threadId',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SettingsWebhookServerRoute = SettingsWebhookServerImport.update({
+  id: '/settings/webhook-server',
+  path: '/settings/webhook-server',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -250,6 +257,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsShortcutsImport
       parentRoute: typeof rootRoute
     }
+    '/settings/webhook-server': {
+      id: '/settings/webhook-server'
+      path: '/settings/webhook-server'
+      fullPath: '/settings/webhook-server'
+      preLoaderRoute: typeof SettingsWebhookServerImport
+      parentRoute: typeof rootRoute
+    }
     '/threads/$threadId': {
       id: '/threads/$threadId'
       path: '/threads/$threadId'
@@ -292,6 +306,7 @@ export interface FileRoutesByFullPath {
   '/settings/mcp-servers': typeof SettingsMcpServersRoute
   '/settings/privacy': typeof SettingsPrivacyRoute
   '/settings/shortcuts': typeof SettingsShortcutsRoute
+  '/settings/webhook-server': typeof SettingsWebhookServerRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
   '/settings/providers/$providerName': typeof SettingsProvidersProviderNameRoute
   '/settings/providers': typeof SettingsProvidersIndexRoute
@@ -313,6 +328,7 @@ export interface FileRoutesByTo {
   '/settings/mcp-servers': typeof SettingsMcpServersRoute
   '/settings/privacy': typeof SettingsPrivacyRoute
   '/settings/shortcuts': typeof SettingsShortcutsRoute
+  '/settings/webhook-server': typeof SettingsWebhookServerRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
   '/settings/providers/$providerName': typeof SettingsProvidersProviderNameRoute
   '/settings/providers': typeof SettingsProvidersIndexRoute
@@ -335,6 +351,7 @@ export interface FileRoutesById {
   '/settings/mcp-servers': typeof SettingsMcpServersRoute
   '/settings/privacy': typeof SettingsPrivacyRoute
   '/settings/shortcuts': typeof SettingsShortcutsRoute
+  '/settings/webhook-server': typeof SettingsWebhookServerRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
   '/settings/providers/$providerName': typeof SettingsProvidersProviderNameRoute
   '/settings/providers/': typeof SettingsProvidersIndexRoute
@@ -358,6 +375,7 @@ export interface FileRouteTypes {
     | '/settings/mcp-servers'
     | '/settings/privacy'
     | '/settings/shortcuts'
+    | '/settings/webhook-server'
     | '/threads/$threadId'
     | '/settings/providers/$providerName'
     | '/settings/providers'
@@ -378,6 +396,7 @@ export interface FileRouteTypes {
     | '/settings/mcp-servers'
     | '/settings/privacy'
     | '/settings/shortcuts'
+    | '/settings/webhook-server'
     | '/threads/$threadId'
     | '/settings/providers/$providerName'
     | '/settings/providers'
@@ -398,6 +417,7 @@ export interface FileRouteTypes {
     | '/settings/mcp-servers'
     | '/settings/privacy'
     | '/settings/shortcuts'
+    | '/settings/webhook-server'
     | '/threads/$threadId'
     | '/settings/providers/$providerName'
     | '/settings/providers/'
@@ -420,6 +440,7 @@ export interface RootRouteChildren {
   SettingsMcpServersRoute: typeof SettingsMcpServersRoute
   SettingsPrivacyRoute: typeof SettingsPrivacyRoute
   SettingsShortcutsRoute: typeof SettingsShortcutsRoute
+  SettingsWebhookServerRoute: typeof SettingsWebhookServerRoute
   ThreadsThreadIdRoute: typeof ThreadsThreadIdRoute
   SettingsProvidersProviderNameRoute: typeof SettingsProvidersProviderNameRoute
   SettingsProvidersIndexRoute: typeof SettingsProvidersIndexRoute
@@ -441,6 +462,7 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsMcpServersRoute: SettingsMcpServersRoute,
   SettingsPrivacyRoute: SettingsPrivacyRoute,
   SettingsShortcutsRoute: SettingsShortcutsRoute,
+  SettingsWebhookServerRoute: SettingsWebhookServerRoute,
   ThreadsThreadIdRoute: ThreadsThreadIdRoute,
   SettingsProvidersProviderNameRoute: SettingsProvidersProviderNameRoute,
   SettingsProvidersIndexRoute: SettingsProvidersIndexRoute,
@@ -471,6 +493,7 @@ export const routeTree = rootRoute
         "/settings/mcp-servers",
         "/settings/privacy",
         "/settings/shortcuts",
+        "/settings/webhook-server",
         "/threads/$threadId",
         "/settings/providers/$providerName",
         "/settings/providers/"
@@ -520,6 +543,9 @@ export const routeTree = rootRoute
     },
     "/settings/shortcuts": {
       "filePath": "settings/shortcuts.tsx"
+    },
+    "/settings/webhook-server": {
+      "filePath": "settings/webhook-server.tsx"
     },
     "/threads/$threadId": {
       "filePath": "threads/$threadId.tsx"

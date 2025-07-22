@@ -238,6 +238,17 @@ pub fn setup_mcp(app: &App) {
             .emit("mcp-update", "MCP servers updated")
             .unwrap();
     });
+
+    // Add a listener to handle app quit gracefully
+    let app_handle_for_quit = app.handle().clone();
+    app.listen_global("tauri://close-requested", move |_event| {
+        let state: tauri::State<AppState> = app_handle_for_quit.state();
+        log::info!("App close requested, handling MCP cleanup.");
+        // We block on this to ensure cleanup happens before the app fully exits.
+        tauri::async_runtime::block_on(async {
+            let _ = super::mcp::handle_app_quit(&state).await;
+        });
+    });
 }
 
 pub fn setup_sidecar(app: &App) -> Result<(), String> {
