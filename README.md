@@ -134,8 +134,14 @@ mise dev        # runs the full development setup
 yarn install
 yarn build:core
 yarn build:extensions
+yarn download:bin
 yarn dev
 ```
+
+`yarn download:bin` downloads the Bun and UV binaries into `src-tauri/resources/bin`.
+For macOS, this also creates `bun-universal-apple-darwin` and `uv-universal-apple-darwin`
+alongside the regular `bun` and `uv` executables. Bundling will fail with a message
+like `Failed to copy external binaries` if these files are missing.
 
 ## System Requirements
 

@@ -94,8 +94,13 @@ async function handleMacOsUniversal() {
 
   // Create universal binaries using lipo
   console.log('Creating universal binaries with lipo...')
-  execSync(`lipo -create -output ${path.join(BIN_DIR, 'bun')} ${bunX64Path} ${bunAarch64Path}`)
-  execSync(`lipo -create -output ${path.join(BIN_DIR, 'uv')} ${uvX64Path} ${uvAarch64Path}`)
+  const bunUniversal = path.join(BIN_DIR, 'bun-universal-apple-darwin')
+  const uvUniversal = path.join(BIN_DIR, 'uv-universal-apple-darwin')
+  execSync(`lipo -create -output ${bunUniversal} ${bunX64Path} ${bunAarch64Path}`)
+  execSync(`lipo -create -output ${uvUniversal} ${uvX64Path} ${uvAarch64Path}`)
+  // also copy to generic names used at runtime
+  fs.copyFileSync(bunUniversal, path.join(BIN_DIR, 'bun'))
+  fs.copyFileSync(uvUniversal, path.join(BIN_DIR, 'uv'))
 
   // Copy architecture-specific binaries
   console.log('Copying architecture-specific binaries...')
@@ -107,6 +112,8 @@ async function handleMacOsUniversal() {
   // Set executable permissions
   fs.chmodSync(path.join(BIN_DIR, 'bun'), '755')
   fs.chmodSync(path.join(BIN_DIR, 'uv'), '755')
+  fs.chmodSync(path.join(BIN_DIR, 'bun-universal-apple-darwin'), '755')
+  fs.chmodSync(path.join(BIN_DIR, 'uv-universal-apple-darwin'), '755')
   fs.chmodSync(path.join(BIN_DIR, 'bun-aarch64-apple-darwin'), '755')
   fs.chmodSync(path.join(BIN_DIR, 'bun-x86_64-apple-darwin'), '755')
   fs.chmodSync(path.join(BIN_DIR, 'uv-aarch64-apple-darwin'), '755')
